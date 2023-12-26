@@ -1,0 +1,26 @@
+{
+  "name": "personalblog",
+  "version": "1.0.0",
+  "description": "Server Programming Lab Final Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kawsarahamad/PersonalBlog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kawsarahamad/PersonalBlog/issues"
+  },
+  "homepage": "https://github.com/kawsarahamad/PersonalBlog#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2"
+  }
+}
