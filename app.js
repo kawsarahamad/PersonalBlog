@@ -8,13 +8,11 @@ const passport = require("passport");
 
 // Passport Strategy
 require("./config/passport")(passport);
+require("./config/passport-google-oauth")(passport);
 
 // Connect to DB
 mongoose
-  .connect(process.env.MongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MongoURI)
   .then(() => {
     console.log("Connected to Database!");
   })
@@ -22,11 +20,10 @@ mongoose
     console.log(error);
   });
 
-
 //Body Parser // for taking data from the form
 app.use(express.urlencoded({ extended: false }));
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 //Session and Flash
@@ -39,18 +36,15 @@ app.use(
 );
 app.use(flash());
 
-
 //Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // //Routes
 // const indexRoutes = require("./routes/index.routes");
- const userRoutes = require("./routes/users.routes");
+const userRoutes = require("./routes/users.routes");
 // app.use(indexRoutes);
- app.use("/users", userRoutes);
+app.use("/users", userRoutes);
 // const welcomeRoutes = require("./routes/index.routes.js");
 // app.use(welcomeRoutes);
 

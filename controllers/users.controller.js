@@ -1,6 +1,9 @@
 const User = require("../models/User.model.js");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
+const mailer = require("../config/mailer.js");
+require("dotenv").config();
 
 
 const getLogin = (req, res) => {
@@ -88,6 +91,91 @@ const getLogin = (req, res) => {
     res.render("../views/dashboard.ejs", { user: req.user });
  }
 
+const getforgotPassword = (req, res) => {
+  res.render("users/forgot-password.ejs", { error: req.flash("error") });
+}
+
+const postforgotPassword = async (req, res) => {
+  try {
+    const {email} = req.body;
+    if (!email) {
+      req.flash("error", "Please enter your email");
+      res.redirect("/users/forgot-password");
+    }
+    const user = await User.findOne({email});
+    if (!user) {
+      req.flash("error", "Email not registered");
+      res.redirect("/users/forgot-password");
+    }
+
+    const token = jwt.sign({email}, process.env.JWT_SECRET, {expiresIn: "5m"});
+
+    const link = `http://localhost:7777/users/reset-password/${token}`;
+    const html = `<p>Click <a href="${link}">here</a> to reset your password</p>`;
+    const text = `Click here to reset your password: ${link}`;
+    
+    await mailer.sendMail({
+      from: "noreply@gmail.com",
+      to: email,
+      subject: "Password reset",
+      html,
+      text
+    });
+
+    res.json({message: "Password reset email sent successfully"});
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  } 
+}
+
+const getResetPassword = (req, res) => {
+  const {token} = req.params;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.render("users/reset-password.ejs", {error: req.flash("error"), email: decoded.email, token: token});
+  } catch (err) {
+    req.flash("error", "Invalid or expired link");
+    res.redirect("/users/forgot-password");
+  }
+}
+
+const postResetPassword = async (req, res) => {
+   
+  const {token} = req.params;
+  console.log(token);
+
+  try {
+    
+    const {email, password, confirm_password} = req.body;
+    if (!email || !password || !confirm_password) {
+      req.flash("error", "All fields are required");
+      res.redirect(`/users/reset-password/${token}`);
+    }
+    if (password.length < 6) {
+      req.flash("error", "Password must be at least 6 characters");
+      res.redirect(`/users/reset-password/${token}`);
+    }
+    if (password !== confirm_password) {
+      req.flash("error", "Passwords do not match");
+      res.redirect(`/users/reset-password/${token}`);
+    }
+    const user = await User.findOne({email});
+    if (!user) {
+      req.flash("error", "Email not registered");
+      res.redirect(`/users/reset-password/${token}`);
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    await User.updateOne({email}, {password: hash});
+    req.flash("success", "Password updated successfully");
+    res.redirect("/users/login");
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  } 
+
+}
 
   module.exports = {
     getLogin,
@@ -95,4 +183,8 @@ const getLogin = (req, res) => {
     postLogin,
     postRegister,
     getDashboard,
+    getforgotPassword,
+    postforgotPassword,
+    getResetPassword,
+    postResetPassword,
   };
