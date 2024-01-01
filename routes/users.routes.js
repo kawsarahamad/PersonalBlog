@@ -21,8 +21,12 @@ router.post("/login", postLogin);
 router.get("/register", getRegister);
 router.post("/register", postRegister);
 router.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+  })
+  res.redirect("/users/login");
 });
 router.get("/dashboard", ensureAuthenticated, getDashboard);
 router.get("/auth/google", passport.authenticate("google", {scope: ["profile", "email"]}));

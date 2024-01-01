@@ -1,0 +1,79 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Blog</title>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            margin-right: 10px;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #449d44;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>BlogSite</h2>
+        <div>
+            <a href="/myposts">My Posts</a>
+            <a href="/users/logout">Logout</a>
+        </div>
+    </div>
+
+    <form action="/blogs/add-blog" method="POST" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+
+        <label for="content">content:</label>
+        <input type="text" id="content" name="content">
+
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image">
+
+        <label for="video">Video File:</label>
+        <input type="file" id="video" name="video">
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

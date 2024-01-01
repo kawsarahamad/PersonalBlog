@@ -41,11 +41,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // //Routes
-// const indexRoutes = require("./routes/index.routes");
 const userRoutes = require("./routes/users.routes");
-// app.use(indexRoutes);
 app.use("/users", userRoutes);
-// const welcomeRoutes = require("./routes/index.routes.js");
-// app.use(welcomeRoutes);
 
+const blogRoutes = require("./routes/blogs.routes");
+app.use("/blogs", blogRoutes);
 module.exports = app;

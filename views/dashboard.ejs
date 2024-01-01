@@ -1,9 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello, World!</title>
+    <title>BlogSite</title>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 7px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            margin-right: 7px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <div class="navbar">
+        <h2>BlogSite</h2>
+        <div>
+            <a href="/myposts">My Posts</a>
+            <a href="/blogs/add-blog">Post a new Blog</a>
+            <a href="/users/logout">Logout</a>
+        </div>
+    </div>
+    <br><br>
 </body>
 </html>
