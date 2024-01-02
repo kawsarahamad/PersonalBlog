@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head.ejs') %>
+  <body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <a href="/" class="h1"><b>BlogSite</b></a>
+        </div>
+        <%if(errors.length>0){%>
+        <div class="alert alert-danger">
+          <%errors.forEach(error=>{%> <%= error%><br />
+          <%})%>
+        </div>
+        <%}%>
+        <div class="card-body">
+          <p class="login-box-msg">Register a new account</p>
+
+          <form action="/users/register" method="POST">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                id="name"
+                name="name"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                id="email"
+                name="email"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                id="password"
+                name="password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Retype password"
+                id="confirm_password"
+                name="confirm_password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">
+                  Register
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+
+          <div>
+            <p></p>
+          </div>
+
+          <form action="/users/auth/google" method="get">
+            <button type="submit" class="btn btn-danger btn-block">
+              <i class="fab fa-google mr-2"></i> Sign in using Google
+            </button>
+          </form>
+
+          <div>
+            <p></p>
+          </div>
+
+          <a href="/users/login" class="text-center"
+            >I already have an account</a
+          >
+        </div>
+        <!-- /.form-box -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+</head>
+<body>
+    <h1>Registration</h1>
+    <form action="/register" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <button type="submit">Register</button>
+    </form>
+    
+    <hr>
+    
+    <h3>Or register with Google:</h3>
+    <a href="/auth/google">Register with Google</a>
+</body>
+</html> -->
