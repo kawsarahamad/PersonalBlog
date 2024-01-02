@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+app.use('/uploads', express.static('uploads'));
 
 //Session and Flash
 app.use(

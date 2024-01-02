@@ -1,0 +1,168 @@
+<!-- FILEPATH: /D:/5th Sem All classes/SP_Lab/SP_Final_Project/PersonalBlog/views/myblogs.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blogs</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            margin-right: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .blog {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .blog h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .blog p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .blog button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .blog button:hover {
+            background-color: #555;
+        }
+
+        p.no-blogs {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <a href="/users/dashboard"><h2>BlogSite</h2> </a>
+            <div>
+                <a href="/blogs/add-blog">Post a new Blog</a>
+                <a href="/users/logout">Logout</a>
+            </div>
+        </div>    
+    </nav>
+
+    <!-- <h1>My Blogs</h1> -->
+
+    <% if (blogs.length > 0) { %>
+        <% blogs.forEach(function(blog) { %>
+            <div class="blog">
+                <h2><%= blog.title %></h2>
+                <p><%= blog.content %></p>
+
+                <% if (blog.image && blog.image.length > 0) {%>
+                <% for (let i = 0; i < blog.image.length; i++) { %>
+                    <div>
+                        <img src="/uploads/images/<%=blog.image[i]%>" width="320" height="320" alt="Image <%= i + 1 %>">
+                    </div>
+                <% } %>
+                <% } %>
+                
+                <% if (blog.video) { %>
+                    <div>
+                        <video width="320" height="240" controls>
+                            <source src="/uploads/videos/<%=blog.video%>" type="video/mp4">
+                        </video>
+                    </div>
+                <% } %>
+                
+                <form action="/blogs/upload-video/<%=blog.id%>" method="POST" enctype="multipart/form-data" class="upload-form">
+                    <input type="file" name="video" accept="video/*" class="upload-input">
+                    <input type="submit" value="Upload Video" class="upload-submit">
+                </form>
+                <a href="/blogs/update-blog/<%= blog.id %>" class="blog-link">Update Post</a>
+
+                <form action="/blogs/delete-blog/<%= blog.id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this blog?')">
+                    <button type="submit" class="blog-link">Delete Post</button>
+                </form>
+
+
+                <!-- <a href="/blogs/delete-blog/<%= blog.id %>" class="blog-link">Delete Post</a> -->
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p class="no-blogs">No blogs found.</p>
+    <% } %>
+    
+    <style>
+        .upload-form {
+            margin-top: 20px;
+        }
+    
+        .upload-input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        .upload-submit {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+    
+        .upload-submit:hover {
+            background-color: #0056b3;
+        }
+    
+        .blog-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+        }
+    
+        .blog-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</body>
+</html>

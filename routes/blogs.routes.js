@@ -10,9 +10,19 @@ const {
 const {
     getAddBlog,
     postAddBlog,
+    getMyBlogs,
+    postVideo,
+    getUpdateBlog,
+    postUpdateBlog,
+    deleteBlog,
 } = require('./../controllers/blogs.controller');
 
 router.get('/add-blog', ensureAuthenticated, getAddBlog);
-router.post('/add-blog', ensureAuthenticated,uploadImage,uploadVideo, postAddBlog);
+router.post('/add-blog', ensureAuthenticated,uploadImage, postAddBlog);
+router.post('/upload-video/:id', ensureAuthenticated,uploadVideo, postVideo);
+router.get('/myblogs', ensureAuthenticated, getMyBlogs);
+router.get('/update-blog/:id', ensureAuthenticated, getUpdateBlog);
+router.post('/update-blog/:id', ensureAuthenticated,uploadImage, postUpdateBlog);
+router.post('/delete-blog/:id', ensureAuthenticated, deleteBlog);
 
 module.exports = router;

@@ -57,6 +57,7 @@ const uploadVideo = (req, res, next) => {
             return res.status(500).json({ message: 'Video upload failed' });
         } else if (err) {
             // An unknown error occurred when uploading
+            console.log(err);
             return res.status(500).json({ message: 'Something went wrong' });
         }
         next();
